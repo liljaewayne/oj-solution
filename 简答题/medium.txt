@@ -1,0 +1,50 @@
+1. 简述几种排序算法, 描述其复杂度, 实现思想
+O(N^2): 选择, 插入, 冒泡
+O(NlogN): 快排, 归并, 堆排
+特定领域O(N): 桶排序( 一个年级的学生的高数成绩, 高数成绩[0, 100] ), 基数排序
+
+2. 多线程: 阻塞与一个很耗时的操作有什么区别
+阻塞时操作系统会剥夺该线程的CPU控制权 必须等待外部条件结束: 比如 IO完成, 等待锁释放, 或通过中断尝试解除阻塞(中断会尝试解除阻塞但不保证一定能解除阻塞, 为什么?) 此时操作系统将这个线程的阻塞状态解除，恢复其对CPU的控制权
+扩展: 中断与InterruptedException, volatile修饰状态, 线程可见性
+
+而很耗时的操作会一直持有CPU的执行权
+
+
+3. 三张表
+student: id, name
+course: id, name
+student_score: student_id, course_id, score
+每个学生每门课只考一次试(即 student_score 表中存在唯一索引 {student_id, course_id} )
+
+请使用一句SQL, 查询每门课的不同分数段(score_period)的人数
+成绩在[80, 100]的为优秀(excellent)
+成绩在[60, 79]的为普通(ordinary)
+成绩在[0, 59]的为不及格(bad)
+
+结果集的表头: course_id, course_name, score_period, student_count
+
+
+select c.id as course_id, c.name as course_name, (
+    case
+        when sc.score between 80 and 100 then 'excellent'
+        when sc.score between 60 and 79 then 'ordinary'
+        when sc.score between 0 and 59 then 'bad'
+    end
+) as 'score_period', count(c.id) as 'student_count'
+from course c inner join sc on c.id=sc.course_id
+group by sc.course_id, (
+    case
+        when sc.score between 80 and 100 then 'excellent'
+        when sc.score between 60 and 79 then 'ordinary'
+        when sc.score between 0 and 59 then 'bad'
+    end
+)
+
+
+
+
+
+
+
+
+

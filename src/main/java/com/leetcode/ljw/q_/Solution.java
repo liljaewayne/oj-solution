@@ -9,6 +9,8 @@ import java.util.Random;
  * 比如, 一亿个整数中取前一万大的数 (第一万大的数同理)
  */
 public class Solution {
+    private static final int n = 1_0000_0000;
+    private static final int m = 1_0000;
 
     /**
      * 要求, 复杂度优于NlogN, 实际上复杂度是NlogM
@@ -17,8 +19,6 @@ public class Solution {
      * @return
      */
     public Integer[] topK(int[] nums) {
-
-        int m = 1_0000;
 
         // 最小堆, 存一万个数
         PriorityQueue<Integer> minHeap = new PriorityQueue<>(m);
@@ -44,7 +44,6 @@ public class Solution {
      */
     public static void main(String[] args) {
         Random random = new Random();
-        int n = 1_0000_0000;
         int[] nums = new int[n];
         for (int i = 0; i < n; i++) {// 准备数据, 先生成有序数组, 再随机乱序
             nums[i] = i;

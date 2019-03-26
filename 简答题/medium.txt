@@ -10,7 +10,45 @@ O(NlogN): 快排, 归并, 堆排
 而很耗时的操作会一直持有CPU的执行权
 
 
-3. 三张表
+3. SQL not in
+某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查询，找出所有从不订购任何东西的客户。
+   
+   Customers 表：
+   
+   +----+-------+
+   | Id | Name  |
+   +----+-------+
+   | 1  | Joe   |
+   | 2  | Henry |
+   | 3  | Sam   |
+   | 4  | Max   |
+   +----+-------+
+   Orders 表：
+   
+   +----+------------+
+   | Id | CustomerId |
+   +----+------------+
+   | 1  | 3          |
+   | 2  | 1          |
+   +----+------------+
+   例如给定上述表格，你的查询应返回：
+   
+   +-----------+
+   | Customers |
+   +-----------+
+   | Henry     |
+   | Max       |
+   +-----------+
+   
+   
+select customers.name as 'Customers'
+from customers
+where customers.id not in (
+    select customerid from orders
+);
+
+4. SQL统计: 
+三张表
 student: id, name
 course: id, name
 student_score: student_id, course_id, score
@@ -30,7 +68,7 @@ select c.id as course_id, c.name as course_name, (
         when sc.score between 60 and 79 then 'ordinary'
         when sc.score between 0 and 59 then 'bad'
     end
-) as 'score_period', count(c.id) as 'student_count'
+) as 'score_period', count(sc.course_id) as 'student_count'
 from course c inner join sc on c.id=sc.course_id
 group by sc.course_id, (
     case

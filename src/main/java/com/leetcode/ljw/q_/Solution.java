@@ -7,6 +7,7 @@ import java.util.Random;
 /**
  * 给定一个很大的数组, 求出其中前K大的元素
  * 比如, 一亿个整数中取前一万大的数 (第一万大的数同理)
+ * 难度: 中
  */
 public class Solution {
     private static final int n = 1_0000_0000;
